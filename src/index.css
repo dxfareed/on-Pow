@@ -1,0 +1,139 @@
+@media(max-width:512px) and (min-width:300px) {
+  /*:root {
+    background-color: #f8f8f8;
+    color: #db1515;
+  }*/
+  body{
+    font-family: monospace;
+  }
+  .mn-nav{
+    background-color: rgb(250, 122, 250);
+    height: 60px;
+    text-align: center;
+    border-radius: 7px 7px 0 0;
+  }
+  .nav-title{
+    padding-top: 18px;
+    font-size: 20px;
+  }
+  .mn-wel{
+    display: flex;
+    font-size: 20px;
+    flex-direction: column;
+    height: 75vh;
+    align-items: center;
+    justify-content: center;
+  }
+  .desgn-wal{
+    background-color:rgb(250, 122, 250); 
+    width: 200px;
+    text-align: center;
+    height: 40px;
+    padding-top: 20px;
+    display: none;
+  }
+  .cbwal{
+    margin-bottom: 10px;
+  }
+  .connect-Wal{
+    background-color:rgb(250, 122, 250);
+    height: 60px;
+    width: 150px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 8px 8px 0 0;
+  }
+  .unreg-user{
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .add-user{
+    margin-top: 150px;
+  }
+  .sub-sign{
+    margin-top: 30px;
+  }
+  #name-text{
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .sub-sign>div>input{
+    border: 1px solid black;
+    height: 32px;
+    border-radius: 2px;
+  }
+  .sub-sign>div>input::placeholder{
+    padding-left: 10px;
+  }
+  #continue-ton{
+    margin-top: 28px;
+    background-color: rgb(250, 122, 250);
+    width: 70px;
+    height: 30px;
+    padding: 15px 4px 0 8px;
+  }
+  .mn-registered{
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    /* align-items: center; */
+  }
+  #id-wallet{
+    text-align: center;
+  }
+  .sub-registered{
+    margin: 40px 0  10px;
+  }
+  .sub-one{
+    display: flex;
+    margin-top: 40px;
+  }
+  .input-val>div{
+    margin: 5px 0 5px 20px ;
+  }
+  .topic{
+    height: 28px;
+    width: 150px;
+    border: 1px solid rgb(17, 17, 17);
+  }
+  .link{
+    height: 30px;
+    border: 1px solid rgb(15, 15, 15);
+  }
+  .add-list{
+    display: flex;
+    justify-content: right;
+    margin-right: 20px;
+  }
+  .add-list>div{
+    background-color: rgb(250, 122, 250);
+    width: 100px;
+    height: 30px;
+    padding-top: 15px;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+  }
+  .view-only-wrong{
+    color: red;
+    display: none;
+  }
+  .disconnect{
+    border: 2px solid rgb(250, 122, 250);
+    width: 80px;
+    padding: 10px 3px;
+  }
+  .sub-discr{
+    display: flex;
+    justify-content: right;
+  }
+  .contingMesage{
+    font-weight: 700;
+    font-size: 30px;
+    margin-top: 100px;
+    text-align: center;
+  }
+}
