@@ -35,17 +35,15 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "arryTest",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "string",
 				"name": "",
 				"type": "string"
 			}
 		],
-		"stateMutability": "pure",
-		"type": "function"
+		"name": "UserNotFound",
+		"type": "error"
 	},
 	{
 		"inputs": [
@@ -58,9 +56,31 @@
 		"name": "checkUser",
 		"outputs": [
 			{
-				"internalType": "string",
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "topic",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "link",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uid",
+						"type": "string"
+					}
+				],
+				"internalType": "struct storeUserData.eachList[]",
 				"name": "",
-				"type": "string"
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -74,6 +94,52 @@
 				"internalType": "address[]",
 				"name": "",
 				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_uid",
+				"type": "string"
+			}
+		],
+		"name": "userPageReturn",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "topic",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "link",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uid",
+						"type": "string"
+					}
+				],
+				"internalType": "struct storeUserData.eachList[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

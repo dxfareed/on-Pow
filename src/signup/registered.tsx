@@ -1,26 +1,92 @@
 //import React from 'react'
-
-import WalletCMP from "../mainComponents/walletCMP";
-
+import abi from '../mainComponents/abi/abi.json'
+import Web3 from "web3";
+import { useAccount } from "wagmi";
+import { useState } from 'react';
+import randomGenString from './genId';
 export default function RegisteredUser({userName,setUserName}) {
     const arraytest=[];
-    function submitit(){
-    const topiclen=document.getElementsByClassName("topic").length
-    for(var i=0; i<topiclen; i++){
-        if( document.getElementsByClassName("topic")[i].value !== "" && document.getElementsByClassName("link")[i].value !== "" ){
-        arraytest.push({
-            topic:document.getElementsByClassName("topic")[i].value,
-            link: document.getElementsByClassName("link")[i].value
+    const valId=randomGenString();
+    const [viewone, setViewOne]= useState(true);
+    const [bool, setBool] = useState(null);
+    const [view, setView] = useState(null);
+    const [viewbool, setViewBool]= useState(false);
+    const {address,status} = useAccount();
+    console.log(valId, "   first text");
+    const ca ="0xe5111d714F2135A28acF35714dFF6a9ba4E70cbe";
+    async function submitit(){
+        const topiclen=document.getElementsByClassName("topic").length;
+        for(var i=0; i<topiclen; i++){
+            if( document.getElementsByClassName("topic")[i].value !== "" && document.getElementsByClassName("link")[i].value !== "" ){
+            arraytest.push({
+                name:userName,
+                topic:document.getElementsByClassName("topic")[i].value,
+                link: document.getElementsByClassName("link")[i].value,
+                uid:valId
+                });
+            }
         }
-        );
+        for (var i=0; i< arraytest.length; i++){
+            if(arraytest[i]!==" "|| arraytest[i]!>=" "*2){
+                setBool(true);
+            }
+            else{
+                setBool(false);
+            }
+        }
+        if(bool){
+            console.log(valId);
+            const provider= window.ethereum;
+            const web3= new Web3(provider);
+            const contract = await new web3.eth.Contract(abi, ca);
+            try{
+                await contract.methods.addList(arraytest).send(
+                    {from : address}
+                )
+            }
+            catch (err) {
+                console.error("error here ", err);
+            }
+        }
+        else{
+            console.log("not sending")
+        }
     }
+    const valueClick= async () =>{
+        try{
+            const provider= "https://base-sepolia-rpc.publicnode.com";
+            const web3= new Web3(provider);
+            const contract = await new web3.eth.Contract(abi, ca);
+            await contract.methods.checkUser(address).call().then(
+            (res)=> {
+                setViewOne(false)
+            });
+            await contract.methods.userPageReturn(address, valId).call().then((res) =>{
+                const viewpage= res.map(
+                  (data)=>(
+                    <div className='sub-list-each'>
+                      <div className='Topic-sub'>{data.topic}</div>
+                      <div className='Link-sub'><a href={data.link} target='_blank'>{data.link}</a></div>
+                    </div>
+                  )
+                )
+                setView(viewpage);
+                setViewBool(true);
+              }
+            )
+
+
+            }
+            catch(err){
+            console.log(err);
+            }
     }
-    console.log(userName);
-    console.log(arraytest);
-    }
-    return (
+
+    //console.log(userName);
+    //console.log(arraytest);
+    return(
     <div>
-        <div className="mn-registered">
+       { viewone && <div className="mn-registered">
             <div className="sub-registered">
                 <div>
                     <div className="sub-one">
@@ -58,7 +124,12 @@ export default function RegisteredUser({userName,setUserName}) {
                     Submit
                 </div>
             </div>
-        </div>
+            <div className="add-list">
+                <div onClick={valueClick}>
+                    get Value
+                </div>
+            </div>
+        </div> }
     </div>
   )
 }
