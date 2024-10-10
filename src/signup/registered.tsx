@@ -4,6 +4,7 @@ import Web3 from "web3";
 import { useAccount } from "wagmi";
 import { useState } from 'react';
 import randomGenString from './genId';
+import ca from './ca'
 export default function RegisteredUser({userName,setUserName}) {
     const arraytest=[];
     const valId=randomGenString();
@@ -12,8 +13,7 @@ export default function RegisteredUser({userName,setUserName}) {
     const [view, setView] = useState(null);
     const [viewbool, setViewBool]= useState(false);
     const {address,status} = useAccount();
-    console.log(valId, "   first text");
-    const ca ="0xe5111d714F2135A28acF35714dFF6a9ba4E70cbe";
+    //const ca ="0x437D1922fc891B15a1b8ad43Fb8b9C3dB308AE2d";
     async function submitit(){
         const topiclen=document.getElementsByClassName("topic").length;
         for(var i=0; i<topiclen; i++){
@@ -35,7 +35,6 @@ export default function RegisteredUser({userName,setUserName}) {
             }
         }
         if(bool){
-            console.log(valId);
             const provider= window.ethereum;
             const web3= new Web3(provider);
             const contract = await new web3.eth.Contract(abi, ca);
@@ -43,6 +42,9 @@ export default function RegisteredUser({userName,setUserName}) {
                 await contract.methods.addList(arraytest).send(
                     {from : address}
                 )
+                console.log("for console message ", arraytest[0].uid );
+                valueClick();
+                showVal(arraytest[0].uid);
             }
             catch (err) {
                 console.error("error here ", err);
@@ -51,6 +53,7 @@ export default function RegisteredUser({userName,setUserName}) {
         else{
             console.log("not sending")
         }
+        //valueClick();
     }
     const valueClick= async () =>{
         try{
@@ -59,27 +62,33 @@ export default function RegisteredUser({userName,setUserName}) {
             const contract = await new web3.eth.Contract(abi, ca);
             await contract.methods.checkUser(address).call().then(
             (res)=> {
+                console.log(res);
                 setViewOne(false)
             });
-            await contract.methods.userPageReturn(address, valId).call().then((res) =>{
-                const viewpage= res.map(
-                  (data)=>(
-                    <div className='sub-list-each'>
-                      <div className='Topic-sub'>{data.topic}</div>
-                      <div className='Link-sub'><a href={data.link} target='_blank'>{data.link}</a></div>
-                    </div>
-                  )
-                )
-                setView(viewpage);
-                setViewBool(true);
-              }
-            )
-
-
             }
             catch(err){
             console.log(err);
             }
+    }
+    const showVal = async (uid)=>{
+        const web3= new Web3("https://base-sepolia-rpc.publicnode.com");
+        const contract= new web3.eth.Contract(abi, ca);
+        await contract.methods.userPageReturn(address, uid).call().then((res) =>{
+            const viewpage= res.map(
+              (data)=>(
+                <ol>
+                <li className='sub-list-each'>
+                  <div className='Topic-sub'>{data.topic}</div>
+                  <div className='Link-sub'><a href={data.link} target='_blank'>{data.link}</a></div>
+                </li>
+                </ol>
+              )
+            )
+            setUserName(res[0].name);
+            setView(viewpage);
+            setViewBool(true);
+          }
+        )
     }
 
     //console.log(userName);
@@ -130,6 +139,9 @@ export default function RegisteredUser({userName,setUserName}) {
                 </div>
             </div>
         </div> }
+        <div className='main-user-view'>
+        { viewbool && <div>{view}</div>}
+        </div>
     </div>
   )
 }

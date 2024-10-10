@@ -9,20 +9,17 @@ import WalletCMP from './mainComponents/walletCMP'
 import abi from './mainComponents/abi/abi.json'
 import { useParams,BrowserRouter, Route,Switch } from 'react-router-dom'
 import Notfound from './signup/notfound'
+import ca from './signup/ca'
 function App() {
   const {address,status} = useAccount()
   const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com")
   const [tr, setTr] = useState(false);
   const [bool, setBool] = useState(true);
-  const ca = '0xe5111d714F2135A28acF35714dFF6a9ba4E70cbe'//'0x1545999E36fFf3a65D30001dEd7BeCFf602B1f97';
+  //const ca = '0x437D1922fc891B15a1b8ad43Fb8b9C3dB308AE2d';
   const contract = new baseSep.eth.Contract(abi, ca);
   const [userName, setUserName] = useState("User");
-  //const {id} = useParams();
   const [elem, setElem]=useState(null);
   const [stbool, setstBool] = useState(false);
-  /* const DynamicComponent = () => {
-    const { id } = useParams();
-  }; */
   const currentPage= window.location.pathname.split("/");
   if(currentPage.length>4){
     return(
@@ -30,8 +27,8 @@ function App() {
     )
   }
   else if(currentPage.length==3|| currentPage.length==3){
-  const val1addrs=currentPage[1];
-  const val1addrsId=currentPage[2];
+  const val1addrs=currentPage[currentPage.length-2];
+  const val1addrsId=currentPage[currentPage.length-1];
   const checkId = async()=>{
     try {
       await contract.methods.userPageReturn(val1addrs, val1addrsId).call().then((res) =>{
@@ -63,43 +60,40 @@ function App() {
       </div>
     )
   }
-  const test = async ()=>{
-    if (status === 'connected') {
-        /* const provider = window.ethereum;
-        setWeb3(new Web3(provider)); */  
-        
-        console.log("test with - in")
-        try {
-            await contract.methods.checkUser(address).call().then(
-              (res) => {
-                setBool(false);
-                setstBool(true);
-                console.log(res);
-              })
-        } catch (err) {
-            console.error('Error occurred:', err);
-        }
+ useEffect(
+    ()=>{
+      if(status=='connected'){
+      try{
+        contract.methods.checkUser(address).call().then(
+          (res)=>{
+            console.log(res);
+          }
+        ).catch((err)=> {
+          console.log("User not found, Check address")
+        })
+      } catch (err){
+        console.log("Connection error")
+      }
     }
-  }
+    },[status]
+  )
   //test();
   //verifyUser();
   return(
     <>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
+    
         <Nav userName={userName} setUserName={setUserName} />
+       
         {status ==='connecting' && <div className='contingMesage'>Connecting</div>}
         {status ==='connected'&&<WalletCMP/>}
         {status==='disconnected'&&<Welcome/>}
         {(status==='connected' && bool) && <UnregisteredUser userName={userName} setUserName={setUserName} setstBool={setstBool} setBool={setBool}/>}
         { (status==='connected' && stbool) && <RegisteredUser userName={userName} setUserName={setUserName}/>}
-        </Route>
-        <Route path="/:id">
+     
+       {/* <Route exact path="/:id">
           <div>hello world</div>
-        </Route>
-      </Switch>
-      </BrowserRouter>
+        </Route>*/}
+      
     </>
   )
 
