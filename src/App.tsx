@@ -10,16 +10,18 @@ import abi from './mainComponents/abi/abi.json'
 import { useParams,BrowserRouter, Route,Switch } from 'react-router-dom'
 import Notfound from './signup/notfound'
 import ca from './signup/ca'
+import UserPage from './signup/userPage'
 function App() {
   const {address,status} = useAccount()
   const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com")
+  const contract = new baseSep.eth.Contract(abi, ca);
   const [tr, setTr] = useState(false);
   const [bool, setBool] = useState(true);
-  //const ca = '0x437D1922fc891B15a1b8ad43Fb8b9C3dB308AE2d';
-  const contract = new baseSep.eth.Contract(abi, ca);
   const [userName, setUserName] = useState("User");
-  const [elem, setElem]=useState(null);
-  const [stbool, setstBool] = useState(false);
+  const [elem, setElem]=useState(null); 
+  const [stbool, setstBool] = useState(null);
+  const [userNotFound, setUserNotFound]= useState(true);
+  const [userId, setUserID]= useState("")
   const currentPage= window.location.pathname.split("/");
   if(currentPage.length>4){
     return(
@@ -52,7 +54,6 @@ function App() {
   }
   checkId();
 }
-  console.log(currentPage)
   if(tr){
     return(
       <div>
@@ -66,73 +67,53 @@ function App() {
       try{
         contract.methods.checkUser(address).call().then(
           (res)=>{
-            console.log(res);
+            //console.log(res);
+            setUserName(res[0].name);
+            setUserID(res[0].uid)
+            setUserNotFound(false)
+            setstBool(false);
           }
         ).catch((err)=> {
+          setUserNotFound(true)
+          setstBool(false);
           console.log("User not found, Check address")
         })
       } catch (err){
-        console.log("Connection error")
+        document.querySelector(".connection-info").style.display="block";
+        setTimeout(
+          ()=>{
+            document.querySelector(".connection-info").style.display="none";
+          }, 4000
+        )
       }
     }
     },[status]
   )
   //test();
   //verifyUser();
+  /*
+    usernotfound will be for the search! yes it will be for the search!
+    and uhm yeah... and it will be cool for just a static page 
+    which the user will be able to share their link and the link include userAddress/ and the uid    */
   return(
     <>
-    
         <Nav userName={userName} setUserName={setUserName} />
-       
         {status ==='connecting' && <div className='contingMesage'>Connecting</div>}
         {status ==='connected'&&<WalletCMP/>}
         {status==='disconnected'&&<Welcome/>}
-        {(status==='connected' && bool) && <UnregisteredUser userName={userName} setUserName={setUserName} setstBool={setstBool} setBool={setBool}/>}
-        { (status==='connected' && stbool) && <RegisteredUser userName={userName} setUserName={setUserName}/>}
-     
+        <div className='connection-info'>Bad Internetconnection</div>
+        {(userNotFound&&(status==='connected' && bool)) && <UnregisteredUser userName={userName} setUserName={setUserName} setstBool={setstBool} setBool={setBool}/>}
+        {userNotFound&&(status==='connected'&& stbool) && <RegisteredUser userName={userName} setUserName={setUserName} userNotFound={userNotFound} 
+        setUserNotFound={setUserNotFound} setstBool={setstBool}/>
+        }
+        {status==='connected'&&( !stbool && !userNotFound) && <UserPage setUserNotFound={setUserNotFound} userNotFound={userNotFound} userId={userId} setUserID={setUserID}/>}
+
        {/* <Route exact path="/:id">
           <div>hello world</div>
         </Route>*/}
       
     </>
   )
-
-  /*return (
-   <>
-      <div>
-        <h2>Account</h2>
-
-        <div>
-          status: {account.status}
-          <br />
-          addresses: {JSON.stringify(account.addresses)}
-          <br />
-          chainId: {account.chainId}
-        </div>
-
-        {account.status === 'connected' && (
-          <button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        )}
-      </div>
-
-      <div>
-        <h2>Connect</h2>
-        {connectors.map((connector) => (
-          <button
-            key={connector.uid}
-            onClick={() => connect({ connector })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        ))}
-        <div>{status}</div>
-        <div>{error?.message}</div>
-      </div>
-    </>
-  )*/
 }
 
 export default App

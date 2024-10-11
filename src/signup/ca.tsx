@@ -1,2 +1,3 @@
-const ca= "0xB2615D2c4cC4F15c6F5b2B44d0Bab8cf8F818Df6"
+//const ca= "0x6928Ed6CA3e3AB912c6CeD0d2977Dc509B6285Cb"
+const ca= "0x39Bb2fEff296E81a98E394799e7703A3dF6b573B"
 export default ca; 

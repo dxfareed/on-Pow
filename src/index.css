@@ -148,8 +148,18 @@
     padding: 5px 5px;
   }
   .Topic-sub{
+    text-transform: capitalize;
     font-family: cursive;
     font-size: 25px;
     font-weight: 700;
+  }
+  .connection-info{
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    display: none;
+  }
+  .input-warn{
+    color: red;
   }
 }

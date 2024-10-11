@@ -36,21 +36,6 @@ export default function UnregisteredUser({userName, setUserName, setstBool, setB
     
     //console.log(wordVerf);
   }
-  const verifyUser = async () => {
-    const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com")
-    if (status === 'connected') {
-      console.log(address)
-      const ca = '0xe5111d714F2135A28acF35714dFF6a9ba4E70cbe';
-      const contract = new baseSep.eth.Contract(abi, ca);
-      try{
-      await contract.methods.checkUser(address).call().then(
-        (res)=> console.log(res));
-      }
-      catch(err){
-        console.log(err);
-      }
-    }
-}
   return (
     <div className='unreg-user'>
       <div className='add-user'>
