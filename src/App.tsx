@@ -22,6 +22,7 @@ function App() {
   const [stbool, setstBool] = useState(null);
   const [userNotFound, setUserNotFound]= useState(true);
   const [userId, setUserID]= useState("")
+  const [input, setInput] = useState(true)
   const currentPage= window.location.pathname.split("/");
   if(currentPage.length>4){
     return(
@@ -76,6 +77,7 @@ function App() {
         ).catch((err)=> {
           setUserNotFound(true)
           setstBool(false);
+          setUserName("User")
           console.log("User not found, Check address")
         })
       } catch (err){
@@ -104,9 +106,10 @@ function App() {
         <div className='connection-info'>Bad Internetconnection</div>
         {(userNotFound&&(status==='connected' && bool)) && <UnregisteredUser userName={userName} setUserName={setUserName} setstBool={setstBool} setBool={setBool}/>}
         {userNotFound&&(status==='connected'&& stbool) && <RegisteredUser userName={userName} setUserName={setUserName} userNotFound={userNotFound} 
-        setUserNotFound={setUserNotFound} setstBool={setstBool}/>
+        setUserNotFound={setUserNotFound} setstBool={setstBool} input={input} setInput={setInput}/>
         }
-        {status==='connected'&&( !stbool && !userNotFound) && <UserPage setUserNotFound={setUserNotFound} userNotFound={userNotFound} userId={userId} setUserID={setUserID}/>}
+        {status==='connected'&&( !stbool && !userNotFound) && <UserPage setUserNotFound={setUserNotFound} userNotFound={userNotFound} userId={userId} 
+        setUserID={setUserID} setstBool={setstBool} setBool={setBool} input={input} setInput={setInput}/>}
 
        {/* <Route exact path="/:id">
           <div>hello world</div>

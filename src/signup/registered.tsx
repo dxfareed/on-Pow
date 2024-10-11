@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 import { useEffect, useState } from 'react';
 import randomGenString from './genId';
 import ca from './ca'
-export default function RegisteredUser({userName, userNotFound,setUserNotFound,setstBool}){
+export default function RegisteredUser({userName, userNotFound,setUserNotFound,setstBool,input,setInput}){
     const {chainId}=useAccount();
     const arraytest=[];
     const valId=randomGenString();
@@ -28,20 +28,25 @@ export default function RegisteredUser({userName, userNotFound,setUserNotFound,s
                 uid:valId
                 });
             }
-            else{
-                alert("Input must not be empty");
-                break;
-            }
         }
+        console.log(arraytest)
         for (var i=0; i< arraytest.length; i++){
-            if(arraytest[i]!==""|| arraytest[i]!>=""*2){
+            if( (arraytest[i].topic!==""||arraytest[i].topic!>=""*2) && (arraytest[i].link!=="" || arraytest[i].link!>=""*2)){
                 setBool(true);
             }
             else{
                 setBool(false);
+                document.querySelector(".input-warn").style.display="block";
+                setTimeout(
+                  ()=>{
+                    document.querySelector(".input-warn").style.display="none";
+                  }, 4000
+                )
+                break;
             }
         }
         if(bool){
+            console.log(arraytest)
             const provider= window.ethereum;
             const web3= new Web3(provider);
             if(chainId!==84532){
@@ -71,7 +76,7 @@ export default function RegisteredUser({userName, userNotFound,setUserNotFound,s
     <div>
        {userNotFound && <div className="mn-registered">
         <div className='input-warn'>Input must not be empty</div>
-            <div className="sub-registered">
+           <div className="sub-registered">
                 <div>
                     <div className="sub-one">
                        <div style={{fontSize:"30px"}}>1</div>
@@ -105,7 +110,7 @@ export default function RegisteredUser({userName, userNotFound,setUserNotFound,s
             </div>
             <div className="add-list">
                 <div onClick={submitit}>
-                    Submit
+                    Upload
                 </div>
             </div>
         </div>

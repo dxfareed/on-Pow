@@ -4,7 +4,7 @@ import { useAccount } from "wagmi";
 import  Web3 from 'web3';
 import ca from './ca'
 import abi from '../mainComponents/abi/abi.json'
-export default function UserPage({userNotFound,userId}) {
+export default function UserPage({userNotFound, setstBool, setUserNotFound, setBool}) {
   const [view, setView] = useState(null);
   const web3= new Web3("https://sepolia.base.org");
   const {address,status} = useAccount()
@@ -37,14 +37,32 @@ export default function UserPage({userNotFound,userId}) {
       })
 
   },[userNotFound])
+  const updateFunc=()=>{
+      setstBool(true)
+      setUserNotFound(true)
+      setBool(false)
+  }
+  const DeleteFunc = async()=>{
+    await contract.methods.addList(address).send(
+      {from : address}).then(
+    (res)=> console.log(res))
+    .catch((err)=> console.log(err));
+
+  }
   return (
+    <>
     <div className='main-user-view'>
-        <div>
+      <div>
             <ol>
               {view}
-              </ol>
-        </div>
-        text
-        </div>
+            </ol>
+      </div>
+    </div>
+    <div className="update-list">
+        <div onClick={DeleteFunc}>
+          text with me
+        </div> 
+    </div>
+    </>
   )
 }

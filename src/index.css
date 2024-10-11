@@ -161,5 +161,16 @@
   }
   .input-warn{
     color: red;
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .update-list{
+    display: flex;
+    justify-content: right;
+  }
+  .update-list>div{
+    background-color:  rgb(250, 122, 250) ;
+    padding: 15px;
   }
 }
