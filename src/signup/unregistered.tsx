@@ -1,12 +1,6 @@
-import {useState} from 'react'
-import WalletDisconnect from "./walletDisconnect";
-import { useAccount } from "wagmi";
-import Web3 from 'web3';
-import abi from '../mainComponents/abi/abi.json';
-
 //@ts-ignore
 export default function UnregisteredUser({userName, setUserName, setstBool, setBool}){
-  const {address,status} = useAccount()
+ // const {address,status} = useAccount()
   //const [web3, setWeb3] = useState(new Web3);
   function onchangeName(){
     

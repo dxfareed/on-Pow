@@ -1,21 +1,15 @@
 //import React from 'react'
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useConnect } from 'wagmi'
 export default function Welcome() {
-  const account = useAccount()
-  const { connectors, connect, status, error } = useConnect()
-  const { disconnect } = useDisconnect()
+  const { connectors, connect} = useConnect()
     function connectClick(){
+      //@ts-ignore
         document.querySelector(".connect-Wal").style.display="none";
+       //@ts-ignore
         document.querySelector(".cbwal").style.display="block"
+        //@ts-ignore
         document.querySelector(".mmwal").style.display="block"
     }
-    function cbwallet(){
-
-    }
-    function mmwal(){
-        
-    }
-    console.log(connectors)
     return (
     <div className="mn-wel">
    <div style={{

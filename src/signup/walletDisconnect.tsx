@@ -1,5 +1,3 @@
-//import React from 'react'
-
 import { useDisconnect } from "wagmi";
 
 export default function WalletDisconnect() {

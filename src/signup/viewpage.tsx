@@ -1,7 +1,8 @@
 import {useState ,useEffect} from "react";
 import  Web3 from 'web3';
 import ca from './ca'
-import abi from '../mainComponents/abi/abi.json'
+import abi from '../mainComponents/abi/abi.json';
+//@ts-ignore
 export default function SharedViewPage({setUserName}) {
   const [view, setView] = useState(null);
   const web3= new Web3("https://sepolia.base.org");
@@ -13,7 +14,10 @@ export default function SharedViewPage({setUserName}) {
       //console.log(res)
       const viewpage= 
           <ol>
-          {res.map(
+          {
+          //@ts-ignore
+          res.map(
+            //@ts-ignore
             (data)=>(
               <li className='sub-list-each'>
                 <div className='Topic-sub'>{data.topic}</div>
@@ -22,24 +26,23 @@ export default function SharedViewPage({setUserName}) {
             )
           )}
           </ol>
+          //@ts-ignore
       setUserName(res[0].name)
+      //@ts-ignore
       setView(viewpage);
     }
   ).catch(()=>{
+    //@ts-ignore
     document.querySelector(".connection-info").style.display="block";
     setTimeout(
       ()=>{
+        //@ts-ignore
         document.querySelector(".connection-info").style.display="none";
       }, 4000
     )
       })
         //0x52c043C7120d7DA35fFdDF6C5c2359d503ceE5F8
-  }, [ca]) 
-  /*const updateFunc=()=>{
-      setstBool(true)
-      setUserNotFound(true)
-      setBool(false)
-  }*/
+  }, [ca])
   return (
     <>
     <div className='main-user-view'>

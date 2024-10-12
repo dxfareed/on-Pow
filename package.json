@@ -1,11 +1,14 @@
 {
+  "homepage": "https://dxfareed.github.io/on-pow",
   "name": "on-pow",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "biome check .",
     "preview": "vite preview"
   },
@@ -27,6 +30,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@wagmi/cli": "latest",
     "buffer": "^6.0.3",
+    "gh-pages": "^6.2.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
   }

@@ -4,11 +4,11 @@ import { useAccount } from "wagmi";
 import  Web3 from 'web3';
 import ca from './ca'
 import abi from '../mainComponents/abi/abi.json'
-export default function UserPage({userNotFound, setstBool, setUserNotFound, setBool}) {
+export default function UserPage({}) {
   const [view, setView] = useState(null);
   const web3= new Web3("https://sepolia.base.org");
   const link = window.location.href;
-  const {address,status,chainId} = useAccount()
+  const {address} = useAccount()
   const contract= new web3.eth.Contract(abi, ca);
   useEffect( ()=>{
     contract.methods.checkUser(address).call().then(
@@ -16,7 +16,10 @@ export default function UserPage({userNotFound, setstBool, setUserNotFound, setB
       console.log(res)
       const viewpage= 
           <ol>
-          {res.map(
+          {
+            //@ts-ignore
+          res.map(
+            //@ts-ignore
             (data)=>(
               <li className='sub-list-each'>
                 <div className='Topic-sub'>{data.topic}</div>
@@ -25,24 +28,22 @@ export default function UserPage({userNotFound, setstBool, setUserNotFound, setB
             )
           )}
           </ol>
+          //@ts-ignore
       setView(viewpage);
       //setViewBool(true);
     }
-  ).catch((err)=>{
+  ).catch(()=>{
+    //@ts-ignore
     document.querySelector(".connection-info").style.display="block";
     setTimeout(
       ()=>{
+        //@ts-ignore
         document.querySelector(".connection-info").style.display="none";
       }, 4000
     )
       })
 
   },[])
-  /*const updateFunc=()=>{
-      setstBool(true)
-      setUserNotFound(true)
-      setBool(false)
-  }*/
   const DeleteFunc = async()=>{
     const provider= window.ethereum;
     const web3= new Web3(provider);
@@ -50,8 +51,8 @@ export default function UserPage({userNotFound, setstBool, setUserNotFound, setB
     try{
     await contract.methods.deleteData(address).send(
         {from : address}).then(
-    (res)=>{ 
-      console.log(res)
+    ()=>{ 
+      //@ts-ignore
       document.querySelector(".deleted-it").style.display="block";
         setTimeout(
           ()=>{
@@ -65,6 +66,7 @@ export default function UserPage({userNotFound, setstBool, setUserNotFound, setB
     catch(err){
       //@ts-ignore
       console.log(err)
+      //@ts-ignore
         document.querySelector(".connection-info").style.display="block";
         setTimeout(
           ()=>{

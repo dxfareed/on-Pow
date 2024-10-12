@@ -1,4 +1,3 @@
-import React from 'react'
 import notfound from '../notfound.webp'
 export default function Notfound() {
   console.log("working page")

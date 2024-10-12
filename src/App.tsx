@@ -1,4 +1,4 @@
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import {useAccount} from 'wagmi'
 import Welcome from './signup/welcome'
 import Nav from './mainComponents/nav'
 import UnregisteredUser from './signup/unregistered'
@@ -13,12 +13,10 @@ import ca from './signup/ca'
 import UserPage from './signup/userPage'
 import SharedViewPage from './signup/viewpage'
 import CreateNewUser from './signup/createNewUser'
-//import { useParams } from 'react-router-dom'
 
 function App() {
   const {address,status} = useAccount()
   const [pagefound, setPageFound] = useState(null);
-  //const history= useHistory();
   const userAddrs= window.location.pathname.split("/")
   const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com")
   const contract = new baseSep.eth.Contract(abi, ca);
@@ -81,21 +79,27 @@ function App() {
         contract.methods.checkUser(address).call().then(
           (res)=>{
             //console.log(res);
+            //@ts-ignore
             setUserName(res[0].name);
-            setUserID(res[0].uid)
-            setUserNotFound(false)
+            //@ts-ignore
+            setUserID(res[0].uid);
+            setUserNotFound(false);
+            //@ts-ignore
             setstBool(false);
           }
         ).catch(()=> {
-          setUserNotFound(true)
+          setUserNotFound(true);
+          //@ts-ignore
           setstBool(false);
-          setUserName("User")
-          console.log("User not found, Check address")
+          setUserName("User");
+          console.log("User not found, Check address");
         })
       } catch (err){
+        //@ts-ignore
         document.querySelector(".connection-info").style.display="block";
         setTimeout(
           ()=>{
+            //@ts-ignore
             document.querySelector(".connection-info").style.display="none";
           }, 4000
         )
@@ -109,9 +113,12 @@ function App() {
       console.log("test")
       try{
         contract.methods.checkUser(userAddrs[userAddrs.length-1]).call().
-      then(()=> setPageFound(true)).catch(()=> setPageFound(false));
+      then(()=>
+        //@ts-ignore 
+        setPageFound(true)).catch(()=> setPageFound(false));
       }
       catch(err){
+        //@ts-ignore
         setPageFound(false)
       }
     }
@@ -143,7 +150,7 @@ function App() {
   //------ 0x52c043C7120d7DA35fFdDF6C5c2359d503ceE5F8
     usernotfound will be for the search! yes it will be for the search!
     and uhm yeah... and it will be cool for just a static page 
-    which the user will be able to share their link and the link include userAddress/ and the uid    */
+    which the user will be able to share their link and the link include userAddress    */
   return(
     <>
       <BrowserRouter basename='/on-pow'>
