@@ -107,7 +107,7 @@ function App() {
     }
     },[status]
   )
-  if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!=""){
+  if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!=" "){
     useEffect(()=>{
     const resFuncUser=async()=>{
       console.log("test")

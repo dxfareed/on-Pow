@@ -11,9 +11,8 @@ export default function UnregisteredUser({userName, setUserName, setstBool, setB
     const wordVerf= val.slice(val.length-9)
     const userMn= val.slice(0,val.length-9)
     if(wordVerf==".base.eth"){
-      console.log("typeshit type---script typeshit typescript typeyeat! heheh");
+      console.log("typeshit type---script typeshit typescript");
       setUserName(userMn);
-      //document.querySelector(".unreg-user").style.display="none";
       setstBool(true);
       setBool(false);
     }
@@ -27,8 +26,6 @@ export default function UnregisteredUser({userName, setUserName, setstBool, setB
         }, 5000
       )
     }
-    
-    //console.log(wordVerf);
   }
   return (
     <div className='unreg-user'>
@@ -36,7 +33,7 @@ export default function UnregisteredUser({userName, setUserName, setstBool, setB
             <div className='sub-sign'>
                 <div id='name-text'>Enter name to continue -&gt;</div>
                 <div><input id="name-in-eth" type='text' placeholder='e.g. Joe' onChange={onchangeName}/></div>
-                <div className="view-only-wrong">base name only!!!</div>
+                <div className="view-only-wrong">Base name only!</div>
                 <div id='continue-ton'>
                   <div onClick={contnFunc}>Continue</div>
                 </div>
