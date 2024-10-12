@@ -13,8 +13,6 @@ export default function RegisteredUser({userName, userNotFound,setUserNotFound,s
     const valId=randomGenString();
     const [bool, setBool] = useState(false);
     const {address} = useAccount();
-    //const [userId, setUserID]= useState("")
-    // [i, setI]= useState(true);
 
     async function submitit(){
         const topiclen=document.getElementsByClassName("topic").length;

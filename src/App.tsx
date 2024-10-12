@@ -107,7 +107,7 @@ function App() {
     }
     },[status]
   )
-  if(userAddrs.length>=3){
+  if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!=""){
     useEffect(()=>{
     const resFuncUser=async()=>{
       console.log("test")
@@ -142,7 +142,7 @@ function App() {
       <Notfound/>
       </>
      )
-  }
+    }
   }
   //test();
   //verifyUser();
