@@ -49,48 +49,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "addrss",
-				"type": "address"
-			}
-		],
-		"name": "checkUser",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "topic",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "link",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "uid",
-						"type": "string"
-					}
-				],
-				"internalType": "struct storeUserData.eachList[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_userAddress",
+				"name": "_user",
 				"type": "address"
 			}
 		],
@@ -100,32 +59,14 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "geTTer",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",
 				"name": "_user",
 				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "_uid",
-				"type": "string"
 			}
 		],
-		"name": "userPageReturn",
+		"name": "checkUser",
 		"outputs": [
 			{
 				"components": [

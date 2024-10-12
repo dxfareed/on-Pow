@@ -7,7 +7,8 @@ import abi from '../mainComponents/abi/abi.json'
 export default function UserPage({userNotFound, setstBool, setUserNotFound, setBool}) {
   const [view, setView] = useState(null);
   const web3= new Web3("https://sepolia.base.org");
-  const {address,status} = useAccount()
+  const link = window.location.href;
+  const {address,status,chainId} = useAccount()
   const contract= new web3.eth.Contract(abi, ca);
   useEffect( ()=>{
     contract.methods.checkUser(address).call().then(
@@ -36,21 +37,51 @@ export default function UserPage({userNotFound, setstBool, setUserNotFound, setB
     )
       })
 
-  },[userNotFound])
-  const updateFunc=()=>{
+  },[])
+  /*const updateFunc=()=>{
       setstBool(true)
       setUserNotFound(true)
       setBool(false)
-  }
+  }*/
   const DeleteFunc = async()=>{
-    await contract.methods.addList(address).send(
-      {from : address}).then(
-    (res)=> console.log(res))
+    const provider= window.ethereum;
+    const web3= new Web3(provider);
+    const contract = await new web3.eth.Contract(abi, ca);
+    try{
+    await contract.methods.deleteData(address).send(
+        {from : address}).then(
+    (res)=>{ 
+      console.log(res)
+      document.querySelector(".deleted-it").style.display="block";
+        setTimeout(
+          ()=>{
+            //@ts-ignore
+            document.querySelector(".deleted-it").style.display="none";
+          }, 4000
+        )
+    })
     .catch((err)=> console.log(err));
+    }
+    catch(err){
+      //@ts-ignore
+      console.log(err)
+        document.querySelector(".connection-info").style.display="block";
+        setTimeout(
+          ()=>{
+            //@ts-ignore
+            document.querySelector(".connection-info").style.display="none";
+          }, 4000
+        )
+    }
+}
 
-  }
   return (
     <>
+    <div className="deleted-it">Deleted !</div>
+    <div className="share-link">
+      <div className="share-link-info">Share PoW:</div>
+      <div className="share-link-link"><a href={link}>{`${link}/${address}`}</a></div>
+    </div>
     <div className='main-user-view'>
       <div>
             <ol>
@@ -60,7 +91,7 @@ export default function UserPage({userNotFound, setstBool, setUserNotFound, setB
     </div>
     <div className="update-list">
         <div onClick={DeleteFunc}>
-          text with me
+          Delete
         </div> 
     </div>
     </>

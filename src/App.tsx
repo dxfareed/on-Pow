@@ -7,23 +7,34 @@ import { useState, useEffect } from 'react'
 import Web3 from 'web3'
 import WalletCMP from './mainComponents/walletCMP'
 import abi from './mainComponents/abi/abi.json'
-import { useParams,BrowserRouter, Route,Switch } from 'react-router-dom'
+import {BrowserRouter, Route,Switch } from 'react-router-dom'
 import Notfound from './signup/notfound'
 import ca from './signup/ca'
 import UserPage from './signup/userPage'
+import SharedViewPage from './signup/viewpage'
+//import { useParams } from 'react-router-dom'
+
 function App() {
   const {address,status} = useAccount()
+  const [pagefound, setPageFound] = useState(null);
+  //const history= useHistory();
+  const userAddrs= window.location.pathname.split("/")
   const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com")
   const contract = new baseSep.eth.Contract(abi, ca);
-  const [tr, setTr] = useState(false);
   const [bool, setBool] = useState(true);
   const [userName, setUserName] = useState("User");
-  const [elem, setElem]=useState(null); 
+  //const [elem, setElem]=useState(null); 
   const [stbool, setstBool] = useState(null);
   const [userNotFound, setUserNotFound]= useState(true);
   const [userId, setUserID]= useState("")
   const [input, setInput] = useState(true)
-  const currentPage= window.location.pathname.split("/");
+  /* useEffect(() => {
+    const redirectTo = new URLSearchParams(window.location.search).get('redirectTo');
+    if (redirectTo) {
+      history.push(redirectTo);
+    }
+  }, [history]); */
+  /* const currentPage= window.location.pathname.split("/");
   if(currentPage.length>4){
     return(
       <Notfound/>
@@ -61,7 +72,7 @@ function App() {
         <div>{elem}</div>
       </div>
     )
-  }
+  } */
  useEffect(
     ()=>{
       if(status=='connected'){
@@ -74,7 +85,7 @@ function App() {
             setUserNotFound(false)
             setstBool(false);
           }
-        ).catch((err)=> {
+        ).catch(()=> {
           setUserNotFound(true)
           setstBool(false);
           setUserName("User")
@@ -91,15 +102,57 @@ function App() {
     }
     },[status]
   )
+  if(userAddrs.length>=3){
+    useEffect(()=>{
+    const resFuncUser=async()=>{
+      console.log("test")
+      try{
+        contract.methods.checkUser(userAddrs[userAddrs.length-1]).call().
+      then(()=> setPageFound(true)).catch(()=> setPageFound(false));
+      }
+      catch(err){
+        setPageFound(false)
+      }
+    }
+    resFuncUser()
+  }, [userAddrs])
+  if(pagefound){
+    console.log("found");
+    return(
+      <>
+      <Nav userName={userName} setUserName={setUserName} />
+      <SharedViewPage setUserName={setUserName}/>
+      </>
+    )
+  }
+  else if(!pagefound){
+    console.log("not found---!")
+     return(<>
+      <Nav userName={userName} setUserName={setUserName} />
+      <Notfound/>
+      </>
+     )
+  }
+  }
   //test();
   //verifyUser();
   /*
+  //------ 0x52c043C7120d7DA35fFdDF6C5c2359d503ceE5F8
     usernotfound will be for the search! yes it will be for the search!
     and uhm yeah... and it will be cool for just a static page 
     which the user will be able to share their link and the link include userAddress/ and the uid    */
   return(
     <>
+      <BrowserRouter basename='/on-pow'>
         <Nav userName={userName} setUserName={setUserName} />
+        {/* 
+        
+        {(!pagefound)&& <div>not found</div>}
+        {(pagefound) && <SharedViewPage/>}
+        
+         */}
+        <Switch>
+        <Route exact path="/">
         {status ==='connecting' && <div className='contingMesage'>Connecting</div>}
         {status ==='connected'&&<WalletCMP/>}
         {status==='disconnected'&&<Welcome/>}
@@ -110,11 +163,15 @@ function App() {
         }
         {status==='connected'&&( !stbool && !userNotFound) && <UserPage setUserNotFound={setUserNotFound} userNotFound={userNotFound} userId={userId} 
         setUserID={setUserID} setstBool={setstBool} setBool={setBool} input={input} setInput={setInput}/>}
-
-       {/* <Route exact path="/:id">
-          <div>hello world</div>
-        </Route>*/}
-      
+        </Route>
+        {/* <Route exact path="/:userAddrs">
+          <div>
+            {pagefound && <div>page found!</div>}
+            {!pagefound && <div>heheh, page not found</div>}
+          </div>
+        </Route> */}
+        </Switch>
+      </BrowserRouter>
     </>
   )
 }

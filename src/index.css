@@ -173,4 +173,27 @@
     background-color:  rgb(250, 122, 250) ;
     padding: 15px;
   }
+  .deleted-it{
+    color: green;
+    text-align: center;
+    display: none;
+  }
+  .page-not-found{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    justify-content: center;
+  }
+  .page-not-found-info{
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .share-link-info{
+    font-size: 16px;
+  }
+  .share-link-link{
+    font-size: 10px;
+  }
 }
