@@ -80,7 +80,7 @@ export default function UserPage({userNotFound, setstBool, setUserNotFound, setB
     <div className="deleted-it">Deleted !</div>
     <div className="share-link">
       <div className="share-link-info">Share PoW:</div>
-      <div className="share-link-link"><a href={link}>{`${link}/${address}`}</a></div>
+      <div className="share-link-link"><a href={`${link}/${address}`}>{`${link}/${address}`}</a></div>
     </div>
     <div className='main-user-view'>
       <div>

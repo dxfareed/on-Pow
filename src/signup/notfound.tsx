@@ -5,7 +5,7 @@ export default function Notfound() {
   return (
     <div className='page-not-found'>
       <div><img src={notfound}/></div>
-      <div className='page-not-found-info'>uhm this address doesn't exist</div>
+      <div className='page-not-found-info'>uhm.. Not found</div>
     </div>
   )
 }

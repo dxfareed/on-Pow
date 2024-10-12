@@ -12,6 +12,7 @@ import Notfound from './signup/notfound'
 import ca from './signup/ca'
 import UserPage from './signup/userPage'
 import SharedViewPage from './signup/viewpage'
+import CreateNewUser from './signup/createNewUser'
 //import { useParams } from 'react-router-dom'
 
 function App() {
@@ -121,6 +122,7 @@ function App() {
     return(
       <>
       <Nav userName={userName} setUserName={setUserName} />
+      <CreateNewUser/>
       <SharedViewPage setUserName={setUserName}/>
       </>
     )
@@ -129,6 +131,7 @@ function App() {
     console.log("not found---!")
      return(<>
       <Nav userName={userName} setUserName={setUserName} />
+      <CreateNewUser/>
       <Notfound/>
       </>
      )
@@ -170,6 +173,9 @@ function App() {
             {!pagefound && <div>heheh, page not found</div>}
           </div>
         </Route> */}
+        <Route path="*">
+          <Notfound/>
+        </Route>
         </Switch>
       </BrowserRouter>
     </>

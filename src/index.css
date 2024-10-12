@@ -137,7 +137,7 @@
     text-align: center;
   }
   .main-user-view{
-    margin-top: 10%;
+    margin-top: 8%;
     display: flex;
     height: 55vh;
   }
@@ -149,8 +149,8 @@
   }
   .Topic-sub{
     text-transform: capitalize;
-    font-family: cursive;
-    font-size: 25px;
+    font-family: monospace;
+    font-size: 22px;
     font-weight: 700;
   }
   .connection-info{
@@ -195,5 +195,20 @@
   }
   .share-link-link{
     font-size: 10px;
+  }
+  .create-new-user{
+    display: flex;
+    justify-content: right; 
+  }
+  .create-new-user>div{
+    margin-top: 20px;
+    background-color:rgb(250, 122, 250);
+    padding: 12px 6px; 
+  }
+  .create-pow{
+    text-decoration: none;
+    color: rgb(17, 17, 17);
+    font-weight: 600;
+    font-size: 16px;
   }
 }
