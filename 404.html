@@ -194,13 +194,15 @@ const App = () => {
     )
     }
     const ListUserPoW = () =>{
-        if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!==" "){
+        console.log("test first")
+        if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!==""){
         useEffect(()=>{
         const resFuncUser=async()=>{
         console.log("test");
         try{
-            contract.methods.checkUser(userAddrs[userAddrs.length-1]).call().
+            await contract.methods.checkUser(userAddrs[userAddrs.length-1]).call().
         then((res)=>{
+            console.log(res)
         setUsername(res[0].name);
         const viewpage= 
           <ol>
