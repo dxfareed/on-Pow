@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>on-PoW</title>
-  <!-- React, ReactDOM, and Web3 from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
@@ -265,7 +264,7 @@ const App = () => {
             <Nav/>
             <CreateNewUser/>
             {pagefound && <div className="main-user-view">{resElem}</div>}
-            {/*!pagefound && <div><Notfound/></div>*/}
+            {!pagefound && <div><Notfound/></div>}
         </div>
     );
 };
