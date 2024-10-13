@@ -1,38 +1,33 @@
-import {useAccount} from 'wagmi'
-import Welcome from './signup/welcome'
-import Nav from './mainComponents/nav'
-import UnregisteredUser from './signup/unregistered'
-import RegisteredUser from './signup/registered'
-import { useState, useEffect } from 'react'
-import Web3 from 'web3'
-import WalletCMP from './mainComponents/walletCMP'
-import abi from './mainComponents/abi/abi.json'
-import {BrowserRouter, Route,Switch } from 'react-router-dom'
-import Notfound from './signup/notfound'
-import ca from './signup/ca'
-import UserPage from './signup/userPage'
-import SharedViewPage from './signup/viewpage'
-import CreateNewUser from './signup/createNewUser'
-
+import {useAccount} from 'wagmi';
+import Welcome from './signup/welcome';
+import Nav from './mainComponents/nav';
+import UnregisteredUser from './signup/unregistered';
+import RegisteredUser from './signup/registered';
+import { useState, useEffect } from 'react';
+import Web3 from 'web3';
+import WalletCMP from './mainComponents/walletCMP';
+import abi from './mainComponents/abi/abi.json';
+import {BrowserRouter, Route,Switch } from 'react-router-dom';
+import Notfound from './signup/notfound';
+import ca from './signup/ca';
+import UserPage from './signup/userPage';
+import SharedViewPage from './signup/viewpage';
+import CreateNewUser from './signup/createNewUser';
+/* interface RouteParams {
+  id: string;
+} */
 function App() {
-  const {address,status} = useAccount()
+  const {address,status} = useAccount();
   const [pagefound, setPageFound] = useState(null);
-  const userAddrs= window.location.pathname.split("/")
-  const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com")
+  const userAddrs= window.location.pathname.split("/");
+  const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com");
   const contract = new baseSep.eth.Contract(abi, ca);
   const [bool, setBool] = useState(true);
   const [userName, setUserName] = useState("User");
-  //const [elem, setElem]=useState(null); 
   const [stbool, setstBool] = useState(null);
   const [userNotFound, setUserNotFound]= useState(true);
   const [userId, setUserID]= useState("")
   const [input, setInput] = useState(true)
-  /* useEffect(() => {
-    const redirectTo = new URLSearchParams(window.location.search).get('redirectTo');
-    if (redirectTo) {
-      history.push(redirectTo);
-    }
-  }, [history]); */
   /* const currentPage= window.location.pathname.split("/");
   if(currentPage.length>4){
     return(
@@ -107,7 +102,7 @@ function App() {
     }
     },[status]
   )
-  if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!=" "){
+  if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!=""){
     useEffect(()=>{
     const resFuncUser=async()=>{
       console.log("test")
@@ -122,7 +117,7 @@ function App() {
         setPageFound(false)
       }
     }
-    resFuncUser()
+    resFuncUser();
   }, [userAddrs])
   if(pagefound){
     console.log("found");
@@ -139,13 +134,12 @@ function App() {
      return(<>
       <Nav userName={userName} setUserName={setUserName} />
       <CreateNewUser/>
+      <div>hereeee222</div>
       <Notfound/>
       </>
      )
     }
   }
-  //test();
-  //verifyUser();
   /*
   //------ 0x52c043C7120d7DA35fFdDF6C5c2359d503ceE5F8
     usernotfound will be for the search! yes it will be for the search!
@@ -174,14 +168,15 @@ function App() {
         {status==='connected'&&( !stbool && !userNotFound) && <UserPage setUserNotFound={setUserNotFound} userNotFound={userNotFound} userId={userId} 
         setUserID={setUserID} setstBool={setstBool} setBool={setBool} input={input} setInput={setInput}/>}
         </Route>
-        {/* <Route exact path="/:userAddrs">
+        {/* <Route exact path="/:id">
           <div>
             {pagefound && <div>page found!</div>}
             {!pagefound && <div>heheh, page not found</div>}
           </div>
-        </Route> */}
+        </Route> */} 
         <Route path="*">
           <Notfound/>
+          <div>catches all error</div>
         </Route>
         </Switch>
       </BrowserRouter>

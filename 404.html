@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; URL=./index.html" />
-    <title>Redirecting...</title>
-</head>
-<body>
+    <meta http-equiv="refresh" content="0; URL=/on-pow/#/">
     <script type="text/javascript">
-        window.location.href = "/index.html";
-      </script>      
-</body>
+      var pathname = window.location.pathname;
+      var newUrl = window.location.origin + '/on-pow/#' + pathname;
+      window.location.href = newUrl;
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
 </html>
