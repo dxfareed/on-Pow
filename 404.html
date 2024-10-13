@@ -1,15 +1,61 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; URL=/on-pow/#/">
-    <script type="text/javascript">
-      var pathname = window.location.pathname;
-      var newUrl = window.location.origin + '/on-pow/#' + pathname;
-      window.location.href = newUrl;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>on-PoW</title>
+    <style>
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> -->
+</head>
+<body>
+    <div id="content"></div>
+    <script>
+  const App = () => {
+  /*  const {useState, useEffect} = React;
+    const [pagefound, setPageFound] = useState(null);
+    const [userName, setUserName] = useState("user")
+    const userAddrs= window.location.pathname.split("/");
+    const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com");
+    const ca= "0xa1D1A9E13396FE9Fa9382dC1F2babCf20d09cC55"
+    const contract = new baseSep.eth.Contract(abi, ca);
+    if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!=""){
+    useEffect(()=>{
+    const resFuncUser=async()=>{
+      console.log("test")
+      try{
+        contract.methods.checkUser(userAddrs[userAddrs.length-1]).call().
+      then(()=>
+        //@ts-ignore 
+        setPageFound(true)).catch(()=> setPageFound(false));
+      }
+      catch(err){
+        //@ts-ignore
+        setPageFound(false)
+      }
+    }
+    resFuncUser();
+  }, [userAddrs])
+   function Nav({userName}){
+    return(
+        <>
+        <div className="nav-cont">
+            <div className="nav-cont-name"> {`${userName}'s POW`} </div>
+        </div>
+        </>
+    );
+  } */
+        return (
+            <div className="fullbody">
+                {/* <Nav userName={userName} setUserName={setUserName}/> */}
+                ii
+            </div>
+        );
+    };
+    ReactDOM.render(<App />, document.getElementById('content'));
     </script>
-  </head>
-  <body>
-    Redirecting...
   </body>
 </html>
