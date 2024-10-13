@@ -1,16 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Route Handling with Web3</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React CDN Example</title>
+  <!-- React, ReactDOM, and Web3 from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- Add Babel CDN -->
+<style>
+    body{
+    font-family: monospace;
+    }
+    .mn-nav{
+    background-color: rgb(250, 122, 250);
+    height: 60px;
+    text-align: center;
+    border-radius: 7px 7px 0 0;
+    }
+    .nav-title{
+    padding-top: 18px;
+    font-size: 20px;
+    }
+    .create-new-user{
+        display: flex;
+        justify-content: right;
+        margin-top: 7%;
+    }
+    .create-pow{
+    font-weight: 600;
+    font-size: 16px;
+    }
+    .sub-list-each{
+    font-size: 20px;
+    border: 1px solid purple;
+    margin: 10% 0;
+    padding: 5px 5px;
+  }
+  .Topic-sub{
+    text-transform: capitalize;
+    font-family: monospace;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .main-user-view{
+    margin-top: 8%;
+    display: flex;
+    height: 55vh;
+  }
+  .page-not-found{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 68vh;
+    justify-content: center;
+  }
+  .page-not-found-info{
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+</style>
 </head>
 <body>
-    <h1>Fetching Data...</h1>
-    <div id="content"></div>
-        text me here!!
-    <script>
-    </script>
-  </body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+const abi=[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "UserNotFound",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "topic",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "link",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uid",
+						"type": "string"
+					}
+				],
+				"internalType": "struct storeUserData.eachList[]",
+				"name": "_userlist",
+				"type": "tuple[]"
+			}
+		],
+		"name": "addList",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			}
+		],
+		"name": "deleteData",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			}
+		],
+		"name": "checkUser",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "topic",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "link",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uid",
+						"type": "string"
+					}
+				],
+				"internalType": "struct storeUserData.eachList[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+const App = () => {
+    const {useState, useEffect}=React;
+    const [username, setUsername] = useState("user");
+    const [pagefound, setPageFound] = useState(null);
+    const userAddrs= window.location.pathname.split("/");
+    const [resElem, setRes]=useState(null);
+    const ca="0xa1D1A9E13396FE9Fa9382dC1F2babCf20d09cC55";
+    const baseSep = new Web3("https://base-sepolia-rpc.publicnode.com");
+    const contract = new baseSep.eth.Contract(abi, ca);
+    const Nav=()=>{
+        return(
+        <div className='mn-nav'>
+        <div className='nav-title'>{`${username}'s POW`}</div>
+        </div>
+        )
+    }
+    const CreateNewUser =()=>{
+        return(
+        <div className='create-new-user'>
+        <div>
+        <a className='create-pow' href='https://dxfareed.github.io/on-pow/'>create POW</a></div>
+        </div>
+    )
+    }
+    const ListUserPoW = () =>{
+        if(userAddrs.length>=3 && (userAddrs[userAddrs.length-1])!=""){
+        useEffect(()=>{
+        const resFuncUser=async()=>{
+        console.log("test");
+        try{
+            contract.methods.checkUser(userAddrs[userAddrs.length-1]).call().
+        then((res)=>{
+        setUsername(res[0].name);
+        const viewpage= 
+          <ol>
+          {
+          res.map(
+            (data)=>(
+              <li className='sub-list-each'>
+                <div className='Topic-sub'>{data.topic}</div>
+                <div className='Link-sub'><a href={data.link} target='_blank'>{data.link}</a></div>
+              </li>
+            )
+          )}
+          </ol>
+            setRes(viewpage);
+            setPageFound(true);
+        }).catch((err)=> {
+                setPageFound(false)
+        });
+        }
+        catch(err){
+            console.log("error caught ", err)
+            setPageFound(false)
+            setUsername("user");
+        }
+        }
+        resFuncUser()
+    }, [userAddrs])
+        
+    /* if(pagefound){
+        resElem.map()
+    return(
+      <>
+      <Nav userName={userName} setUserName={setUserName} />
+      <CreateNewUser/>
+      <SharedViewPage setUserName={setUserName}/>
+      <Notfound/>
+      </>
+    )
+  }
+  else if(!pagefound){
+    console.log("not found---!")
+     return(<>
+      <Nav userName={userName} setUserName={setUserName} />
+      <CreateNewUser/>
+      
+      </>
+     )
+    } */
+    }
+}
+    const Notfound=()=> {
+    return (
+        <div className='page-not-found'>
+        <div><img src='./notfound.webp'/></div>
+        <div className='page-not-found-info'>arghhh 404.. page not found</div>
+        </div>
+    )
+    }
+    return (
+        <div className="full-page">
+            <Nav/>
+            <CreateNewUser/>
+            {pagefound && <div className="main-user-view">{resElem}</div>}
+            {!pagefound && <div><Notfound/></div>}
+        </div>
+    );
+};
+    ReactDOM.render(
+      <App/>,
+      document.getElementById('root')
+    );
+  </script>
+</body>
 </html>
